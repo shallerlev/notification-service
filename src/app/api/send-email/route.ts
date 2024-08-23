@@ -2,6 +2,8 @@ import * as nodemailer from "nodemailer";
 
 import { getScheduledNotification } from "@/lib/db/queries/getScheduledNotification";
 
+export const dynamic = "force-dynamic";
+
 const { SMTP_EMAIL, SMTP_APP_PSWD } = process.env;
 
 const transporter = nodemailer.createTransport({
