@@ -11,8 +11,7 @@ export async function getScheduledNotification(): Promise<NotificationSchedule |
   await dbConnect();
 
   const now = dayjs();
-  const currentHour = now.hour();
-  const currentMinute = now.minute();
+  const time = now.format("HH:mm");
   const currentDayOfWeek = now.day();
   const currentDayOfMonth = now.date();
 
@@ -22,17 +21,17 @@ export async function getScheduledNotification(): Promise<NotificationSchedule |
       $or: [
         {
           interval: NotificationInterval.Daily,
-          time: `${currentHour}:${currentMinute}`,
+          time,
         },
         {
           interval: NotificationInterval.Weekly,
           dayOfWeek: currentDayOfWeek,
-          time: `${currentHour}:${currentMinute}`,
+          time,
         },
         {
           interval: NotificationInterval.Monthly,
           day: currentDayOfMonth,
-          time: `${currentHour}:${currentMinute}`,
+          time,
         },
       ],
     })

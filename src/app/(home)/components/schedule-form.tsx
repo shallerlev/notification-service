@@ -53,7 +53,12 @@ export default function ScheduleForm({ latestNotificationSchedule }: Props) {
         time: dayjs(latestNotificationSchedule.time, TIME_FORMAT),
       }
     : {};
-  const { control, handleSubmit, watch } = useForm<NotificationScheduleValues>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { isLoading },
+  } = useForm<NotificationScheduleValues>({
     resolver: zodResolver(notificationScheduleValidationSchema),
     defaultValues,
   });
@@ -136,7 +141,7 @@ export default function ScheduleForm({ latestNotificationSchedule }: Props) {
           </Col>
         </Row>
 
-        <FormItem control={control} name="time" label="Notification Time">
+        <FormItem control={control} name="time" label="Notification Time (UTC)">
           <TimePicker format={TIME_FORMAT} />
         </FormItem>
 
@@ -145,6 +150,7 @@ export default function ScheduleForm({ latestNotificationSchedule }: Props) {
             type="primary"
             htmlType="submit"
             icon={<ClockCircleOutlined />}
+            loading={isLoading}
           >
             Save Schedule
           </Button>
